@@ -33,6 +33,12 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Do NOT use `ngClass`, use `class` bindings instead
 - Do NOT use `ngStyle`, use `style` bindings instead
 - When using external templates/styles, use paths relative to the component TS file.
+- When you generate new service, put it in the separate folder named after the service inside src/app/services/ folder.
+- Before generating a new service, check if a similar service already exists to avoid duplication.
+- When creating a new component, place it in a folder named after the component inside src/app/components/ folder.
+- Before generating a new component, check if a similar component already exists to avoid duplication.
+- Keep service and name consistent. For example. If the service is named `UserDataService`, the file should be named `user-data.service.ts`, and placed in folder named `user-data`.
+- When creating a new model/interface, place it in a folder named `models` inside `src/app/` folder.
 
 ## State Management
 

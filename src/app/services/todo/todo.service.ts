@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { Todo } from './todo.model';
+import { Todo } from '../../models/todo.model';
 
 @Injectable({
   providedIn: 'root'
