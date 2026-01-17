@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, computed, signal, inject } from '@a
 import { FormsModule } from '@angular/forms';
 import { TodoService } from '@/app/services/todo/todo.service';
 
+// Todo list component managing todo items with add, delete, toggle, and batch operations 📝
 @Component({
   selector: 'app-todo',
   imports: [FormsModule],

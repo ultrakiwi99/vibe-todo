@@ -54,6 +54,7 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Design services around a single responsibility
 - Use the `providedIn: 'root'` option for singleton services
 - Use the `inject()` function instead of constructor injection
+- Create unit-test files along with service file with tests set covering service functionality
 - **Extract hardcoded initial data into plain functions to avoid duplication and improve maintainability**
   - Create helper functions that return arrays of initial data (e.g., `getInitialTodos()`)
   - Use these functions to populate signals instead of inline arrays
