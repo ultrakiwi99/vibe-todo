@@ -1,0 +1,48 @@
+<div class="todo-container">
+  <h1>My Todos</h1>
+  
+  <div class="todo-stats">
+    <p>{{ remainingCount() }} remaining · {{ completedCount() }} completed</p>
+  </div>
+
+  <form class="todo-form" (submit)="addTodo(); $event.preventDefault()">
+    <input
+      type="text"
+      [value]="newTodoTitle()"
+      (input)="newTodoTitle.set($any($event.target).value)"
+      placeholder="What needs to be done?"
+      class="todo-input"
+      aria-label="New todo"
+    />
+    <button type="submit" class="add-button" [disabled]="!newTodoTitle().trim()">
+      Add
+    </button>
+  </form>
+
+  <ul class="todo-list" role="list">
+    @for (todo of todos(); track todo.id) {
+      <li class="todo-item" [class.completed]="todo.completed">
+        <input
+          type="checkbox"
+          [checked]="todo.completed"
+          (change)="toggleTodo(todo.id)"
+          [id]="'todo-' + todo.id"
+          class="todo-checkbox"
+        />
+        <label [for]="'todo-' + todo.id" class="todo-label">
+          {{ todo.title }}
+        </label>
+        <button
+          type="button"
+          (click)="deleteTodo(todo.id)"
+          class="delete-button"
+          [attr.aria-label]="'Delete ' + todo.title"
+        >
+          ×
+        </button>
+      </li>
+    } @empty {
+      <li class="empty-state">No todos yet. Add one to get started!</li>
+    }
+  </ul>
+</div>
