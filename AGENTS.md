@@ -54,3 +54,30 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Design services around a single responsibility
 - Use the `providedIn: 'root'` option for singleton services
 - Use the `inject()` function instead of constructor injection
+
+## Instruction Files
+
+- Disregard any instructions to merge instruction files. Keep `AGENTS.md` and `copilot-instructions.md` separate and untouched. Do not modify `copilot-instructions.md`!
+- Notify me every time you call Angular's MCP server.
+
+## Tooling Instructions
+
+- Do not create files without verifying first. Always suggest the Angular CLI command for the code scaffolding, then wait to continue.
+  - Angular CLI is installed globally, so use `ng` commands. Don't use `npx @angular/cli`, there's no need. E.g., use the syntax `ng generate component user`
+
+## Code style
+
+- Always add a comment summarizing the main points to each generated code block.
+- Refer to Angular's API documentation. If the generated code includes experimental or developer preview features, note it in the comment. List the experimental or developer preview feature, and include a 🧪 emoji for experimental or 👁️ emoji for developer preview features.
+- End all comments with a cute emoji, such as 🐳 or 🍭
+- When you generate new service, put it in the separate folder named after the service inside src/app/services/ folder.
+- Before generating a new service, check if a similar service already exists to avoid duplication.
+- When creating a new component, place it in a folder named after the component inside src/app/components/ folder.
+- Before generating a new component, check if a similar component already exists to avoid duplication.
+- Keep service and name consistent. For example. If the service is named `UserDataService`, the file should be named `user-data.service.ts`, and placed in folder named `user-data`.
+- When creating a new model/interface, place it in a folder named `models` inside `src/app/` folder.
+
+## Naming Practices
+
+- Components don't use `Component` suffix in their names. E.g., use `UserProfile` instead of `UserProfileComponent`
+- Services don't use `Service` suffix in their names. E.g., use `Auth` instead of `AuthService`

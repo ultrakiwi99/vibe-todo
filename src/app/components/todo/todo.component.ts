@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, computed, signal, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TodoService } from '../../services/todo/todo.service';
+import { TodoService } from '@/app/services/todo/todo.service';
 
 @Component({
   selector: 'app-todo',

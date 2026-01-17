@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
-import { Todo } from '../../models/todo.model';
+import { Todo } from '@/app/models/todo.model';
 
+// Todo service managing a list of hardcoded todos with signal-based reactivity 🍭
 @Injectable({
   providedIn: 'root'
 })
@@ -13,10 +14,12 @@ export class TodoService {
     { id: 5, title: 'Deploy to production', completed: false }
   ]);
 
+    // Return readonly signal to prevent external mutations 🐳
   getTodos() {
     return this.todos.asReadonly();
   }
 
+    // Add a new todo to the list 📝
   addTodo(title: string) {
     const newTodo: Todo = {
       id: Date.now(),
@@ -26,6 +29,7 @@ export class TodoService {
     this.todos.update(todos => [...todos, newTodo]);
   }
 
+    // Toggle the completed status of a todo 🔄
   toggleTodo(id: number) {
     this.todos.update(todos =>
       todos.map(todo =>
@@ -34,6 +38,7 @@ export class TodoService {
     );
   }
 
+    // Delete a todo by id 🗑️
   deleteTodo(id: number) {
     this.todos.update(todos => todos.filter(todo => todo.id !== id));
   }
