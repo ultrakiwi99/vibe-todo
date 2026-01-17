@@ -44,5 +44,24 @@
     } @empty {
       <li class="empty-state">No todos yet. Add one to get started!</li>
     }
+  <div class="todo-controls">
+    <button
+      type="button"
+      (click)="clearCompleted()"
+      class="control-button clear-button"
+      [disabled]="completedCount() === 0"
+      aria-label="Clear completed todos"
+    >
+      Clear Completed
+    </button>
+    <button
+      type="button"
+      (click)="resetTodos()"
+      class="control-button reset-button"
+      aria-label="Reset todos to initial state"
+    >
+      Reset
+    </button>
+  </div>
   </ul>
 </div>

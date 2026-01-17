@@ -38,4 +38,14 @@ export class TodoComponent {
   protected deleteTodo(id: number) {
     this.todoService.deleteTodo(id);
   }
+
+  // Clear all completed todos 🧹
+  protected clearCompleted() {
+    this.todoService.clearCompleted();
+  }
+
+  // Reset todos to initial state 🔄
+  protected resetTodos() {
+    this.todoService.resetTodos();
+  }
 }
