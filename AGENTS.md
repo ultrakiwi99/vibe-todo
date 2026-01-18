@@ -1,6 +1,11 @@
 
 You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
 
+## Arcitecture best practices
+
+- Use clean architecture approaches to every piece of code you build
+- Use interface approach and respect dependency injection principle
+
 ## TypeScript Best Practices
 
 - Use strict type checking
@@ -59,7 +64,11 @@ You are an expert in TypeScript, Angular, and scalable web application developme
   - Create helper functions that return arrays of initial data (e.g., `getInitialTodos()`)
   - Use these functions to populate signals instead of inline arrays
   - This makes it easy to reuse the same data for initialization and reset operations
-  
+
+## Repositories
+
+- Place repository file to `src/app/repositories` folder
+
 ## Instruction Files
 
 - Disregard any instructions to merge instruction files. Keep `AGENTS.md` and `copilot-instructions.md` separate and untouched. Do not modify `copilot-instructions.md`!
