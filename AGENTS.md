@@ -53,6 +53,9 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Use the async pipe to handle observables
 - Do not assume globals like (`new Date()`) are available.
 - Do not write arrow functions in templates (they are not supported).
+- Use css for styling.
+- Avoid standard styling, keep styling modern, laconic and light. Avoid common ai slop as much as you can.
+- Use modern css features.
 
 ## Services
 
@@ -95,3 +98,7 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 
 - Components don't use `Component` suffix in their names. E.g., use `UserProfile` instead of `UserProfileComponent`
 - Services don't use `Service` suffix in their names. E.g., use `Auth` instead of `AuthService`
+
+## Git practices
+
+- Commit message should contain summary of changes and be no longer than 75 symbols.
