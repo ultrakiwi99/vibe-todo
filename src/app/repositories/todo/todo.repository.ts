@@ -1,4 +1,4 @@
-import { inject, Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { IDataStore, QueryFilter } from '@/app/models/data-store.interface';
 import { Todo } from '@/app/models/todo.model';
 import { environment } from '@/environments/environment';
@@ -8,7 +8,6 @@ import { SupabaseClientService } from '@/app/services/supabase-client/supabase-c
 @Injectable({
     providedIn: 'root'
 })
-@Inject(SupabaseClientService)
 export class TodoRepository {
     // Table name for todos with environment prefix 📋
     private tableName = `${environment.tablePrefix}_todos`;

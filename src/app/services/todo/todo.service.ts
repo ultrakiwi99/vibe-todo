@@ -1,29 +1,19 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
 import { Todo } from '@/app/models/todo.model';
-
-// Function to create hardcoded initial todos 🏭
-function getInitialTodos(): Todo[] {
-    return [
-    { id: 1, title: 'Learn Angular signals', completed: true },
-    { id: 2, title: 'Build a todo app', completed: false },
-    { id: 3, title: 'Master TypeScript', completed: false },
-    { id: 4, title: 'Write clean code', completed: true },
-    { id: 5, title: 'Deploy to production', completed: false }
-    ];
-}
+import { TodoRepository } from '@/app/repositories/todo/todo.repository';
 
 // Todo service managing a list of hardcoded todos with signal-based local state management 🍭
 @Injectable({
     providedIn: 'root'
 })
 export class TodoService {
-    // Local state holding hardcoded todo list 📦
-    private todos = signal<Todo[]>(getInitialTodos());
+  private todoRepository = inject(TodoRepository);
+  private todos = signal<Todo[]>([]);
 
     // Return readonly signal to prevent external mutations 🐳
-  getTodos() {
-    return this.todos.asReadonly();
-  }
+    getTodos() {
+        return this.todos.asReadonly();
+    }
 
     // Get a single todo item by id 🎯
     getTodoById(id: number) {
@@ -46,45 +36,60 @@ export class TodoService {
     }
 
     // Add a new todo to the list 📝
-  addTodo(title: string) {
-    const newTodo: Todo = {
-      id: Date.now(),
-      title,
-      completed: false
-    };
-    this.todos.update(todos => [...todos, newTodo]);
-  }
+    async loadTodos() {
+        const todos = await this.todoRepository.readAll();
+        this.todos.set(todos);
+    }
+
+    async addTodo(title: string) {
+        const created = await this.todoRepository.create(title);
+        this.todos.update(todos => [...todos, created]);
+    }
 
     // Update a todo item by id ✏️
-    updateTodo(id: number, updates: Partial<Todo>) {
+    async updateTodo(id: number, updates: Partial<Todo>) {
+      const [updated] = await this.todoRepository.update(id, updates);
+      if (!updated) {
+        return;
+      }
+      this.todos.update(todos =>
+        todos.map(todo =>
+          todo.id === id ? updated : todo
+        )
+      );
+    }
+
+    // Toggle the completed status of a todo 🔄
+    async toggleTodo(id: number) {
+        const current = this.todos().find(todo => todo.id === id);
+        if (!current) {
+            return;
+        }
+        const [updated] = await this.todoRepository.toggleCompleted(id, !current.completed);
+        if (!updated) {
+            return;
+        }
         this.todos.update(todos =>
             todos.map(todo =>
-                todo.id === id ? { ...todo, ...updates } : todo
+                todo.id === id ? updated : todo
             )
         );
     }
 
-    // Toggle the completed status of a todo 🔄
-  toggleTodo(id: number) {
-    this.todos.update(todos =>
-      todos.map(todo =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
-  }
-
     // Delete a todo by id 🗑️
-  deleteTodo(id: number) {
-    this.todos.update(todos => todos.filter(todo => todo.id !== id));
-  }
+    async deleteTodo(id: number) {
+        await this.todoRepository.delete(id);
+        this.todos.update(todos => todos.filter(todo => todo.id !== id));
+    }
 
     // Clear all completed todos 🧹
-    clearCompleted() {
-        this.todos.update(todos => todos.filter(todo => !todo.completed));
+    async clearCompleted() {
+      await this.todoRepository.deleteCompleted();
+      this.todos.update(todos => todos.filter(todo => !todo.completed));
     }
 
     // Reset todos to hardcoded initial state 🔄
-    resetTodos() {
-        this.todos.set(getInitialTodos());
+    async resetTodos() {
+      await this.loadTodos();
     }
 }

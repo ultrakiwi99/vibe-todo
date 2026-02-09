@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, computed, signal, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, computed, signal, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TodoService } from '@/app/services/todo/todo.service';
 
@@ -10,7 +10,7 @@ import { TodoService } from '@/app/services/todo/todo.service';
   styleUrl: './todo.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TodoComponent {
+export class TodoComponent implements OnInit {
   private todoService = inject(TodoService);
   
   protected todos = this.todoService.getTodos();
@@ -24,29 +24,33 @@ export class TodoComponent {
     return this.todos().filter(todo => todo.completed).length;
   });
 
-  protected addTodo() {
+  async ngOnInit() {
+    await this.todoService.loadTodos();
+  }
+
+  protected async addTodo() {
     const title = this.newTodoTitle().trim();
     if (title) {
-      this.todoService.addTodo(title);
+      await this.todoService.addTodo(title);
       this.newTodoTitle.set('');
     }
   }
 
-  protected toggleTodo(id: number) {
-    this.todoService.toggleTodo(id);
+  protected async toggleTodo(id: number) {
+    await this.todoService.toggleTodo(id);
   }
 
-  protected deleteTodo(id: number) {
-    this.todoService.deleteTodo(id);
+  protected async deleteTodo(id: number) {
+    await this.todoService.deleteTodo(id);
   }
 
   // Clear all completed todos 🧹
-  protected clearCompleted() {
-    this.todoService.clearCompleted();
+  protected async clearCompleted() {
+    await this.todoService.clearCompleted();
   }
 
   // Reset todos to initial state 🔄
-  protected resetTodos() {
-    this.todoService.resetTodos();
+  protected async resetTodos() {
+    await this.todoService.resetTodos();
   }
 }
